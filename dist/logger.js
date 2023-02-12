@@ -21,7 +21,10 @@ const logger = winston_1.default.createLogger({
         return `[${info.timestamp}] ${info.level}: ${info.message}`;
     })),
     transports: [
-        new winston_1.default.transports.Console(),
+        new winston_1.default.transports.Console({
+            handleExceptions: true,
+            handleRejections: true,
+        }),
         new winston_1.default.transports.DailyRotateFile({
             filename: 'combined %DATE%',
             datePattern: 'DD-MM-YYYY',
@@ -29,6 +32,7 @@ const logger = winston_1.default.createLogger({
             extension: '.log',
             maxSize: process.env.LOGGER_FILE_SIZE ?? 1024 * 1024 * 100,
             handleExceptions: true,
+            handleRejections: true,
             format: winston_1.default.format.uncolorize(),
         }),
     ],
