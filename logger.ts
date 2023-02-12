@@ -23,7 +23,10 @@ const logger = winston.createLogger({
         })
     ),
     transports: [
-        new winston.transports.Console(),
+        new winston.transports.Console({
+            handleExceptions: true,
+            handleRejections: true,
+        }),
         new winston.transports.DailyRotateFile({
             filename: 'combined %DATE%',
             datePattern: 'DD-MM-YYYY',
@@ -31,6 +34,7 @@ const logger = winston.createLogger({
             extension: '.log',
             maxSize: process.env.LOGGER_FILE_SIZE ?? 1024 * 1024 * 100,
             handleExceptions: true,
+            handleRejections: true,
             format: winston.format.uncolorize(),
         }),
     ],
